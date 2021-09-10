@@ -1,6 +1,6 @@
 <h1><%= @genre.name %></h1>
 
-<h3>Includes <%= @genre.boardgames.count %> games:</h3>
+<h3>Includes <%= pluralize(@genre.boardgames.count, "boardgame") %>:</h3>
 <ul>
 <% @genre.boardgames.each do |boardgame| %>
     <li><%= link_to boardgame.name, boardgame_path(boardgame) %></li>
