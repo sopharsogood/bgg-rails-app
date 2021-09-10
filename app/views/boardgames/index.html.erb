@@ -1,0 +1,6 @@
+<h1>All Boardgames</h1>
+<ul>
+<%= @boardgames.each do |boardgame| %>
+    <li><%= link_to boardgame.name, boardgame_path(boardgame) %></li>
+<% end %>
+</ul>
