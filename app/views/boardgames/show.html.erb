@@ -2,9 +2,9 @@
 
 <p><%= @boardgame.blurb %></p>
 
-<h3>Member of <%= pluralize("genre", @boardgame.genres.count) %>:</h3>
+<h3>Member of <%= @boardgame.genres.count %> genres:</h3>
 <ul>
-<%= @boardgame.genres.each do |genre| %>
+<% @boardgame.genres.each do |genre| %>
     <li><%= link_to genre.name, genre_path(genre) %></li>
 <% end %>
 </ul>
