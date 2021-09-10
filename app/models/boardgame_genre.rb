@@ -1,0 +1,2 @@
+class BoardgameGenre < ApplicationRecord
+end
