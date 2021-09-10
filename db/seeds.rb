@@ -28,10 +28,15 @@ def make_boardgames_from_index(doc_tr)
 end
 
 def get_single_game_details(boardgame)
+    game_id = boardgame.url.split("/")[2]
+    url = "https://api.geekdo.com/xmlapi2/thing?id=" + game_id
+    uri = URI.parse(url)
+    response = Net::HTTP.get_response(uri)
+    doc = Nokogiri::HTML(response.body)
     genre_array = self.collect_values_of_type(doc, "boardgamecategory")
     genre_array.each do |genre|
-        Genre.find_or_create_by(name: genre)
-        BoardgameGenre.create(boardgame: boardgame, genre: genre)
+        current_genre = Genre.find_or_create_by(name: genre)
+        BoardgameGenre.create(boardgame: boardgame, genre: current_genre)
     end
 end
 
@@ -46,8 +51,8 @@ Genre.destroy_all
 BoardgameGenre.destroy_all
 
 doc_tr = scrape_index("https://boardgamegeek.com/browse/boardgame")
-make_boardgames_from_index(doc)
+make_boardgames_from_index(doc_tr)
 
-Boardgame.each do |boardgame|
+Boardgame.all.each do |boardgame|
     get_single_game_details(boardgame)
 end
